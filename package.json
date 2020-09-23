@@ -22,6 +22,6 @@
   },
   "scripts": {
     "build": "yarn run webpack",
-    "debug": "yarn build && http-server dist"
+    "debug": "yarn build && http-server docs"
   }
 }
