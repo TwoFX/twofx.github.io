@@ -1,0 +1,38 @@
+Let $G$ be a finite group. A representation of $G$ is a homomorphism $\rho\colon G\to\operatorname{GL}(V)$,
+where $V$ is some finite-dimensional complex vector space. We want to somehow classify all
+representations of $G$. By Maschke's theorem, every representation can be decomposed as
+a [[direct sum|toggle:dsum]] of [[irreducible representations|toggle:irred]].
+
+_ dsum
+    Let $\rho\colon G \to \operatorname{GL}(V)$ and $\rho'\colon G\to \operatorname{GL}(V')$ be representation. The direct sum
+    $\rho \oplus \rho'\colon G \to \operatorname{GL}(V \oplus W)$ is given by $g\mapsto ((v, v')\mapsto (\rho(v), \rho'(v')))$.
+
+_ irred
+    Let $\rho\colon G\to\operatorname{GL}(V)$ be a representation. We say that $\rho$ is irreducible if there is no
+    subspace $W \leq V$ such that $\forall g\in G\colon \rho(g)(W)\leq W$.
+
+Therefore, if we understand the irreducible representations of $G$, [[in a way|toggle:inner]], we understand all
+representations of $G$.
+
+_ inner
+    That is, if there is a way to actually find the irreducible components.
+    It turns out that this is possible---stay tuned!
+
+# Characters
+
+Representations can be a bit unwieldy, as $V$ can be an arbitrary finite-dimensional
+complex vector space. Miraculously, there is an invariant the completely
+characterizes representations: define the character $\chi_{\rho}\colon G \to \mathbb{C}$ of a representation $\rho$ via
+$g\mapsto \operatorname{tr}\rho(g)$.
+
+The definition may seem innocent enough, but it works rediculously well. Notice that
+a character is a class function, i.e., it is constant on conjugacy classes of $G$. Indeed, we
+have $$\chi(hgh^{-1}) = \operatorname{tr} \rho(hgh^{-1}) = \operatorname{tr} \rho(h)\rho(g)\rho(h)^{-1} = \operatorname{tr} \rho(g) = \chi(g).$$
+Now let $\mathcal{C}(G)$ be the complex vector space of class functions of $G$. We have a Hermitian inner
+product on $\mathcal{C}(G)$ given by $\langle \alpha, \beta\rangle \coloneqq \frac{1}{|G|}\sum_{g \in G}\alpha(g)\overline{\beta(g)}$.
+
+Now, here's the miracle: the [[irreducible characters|toggle:irred2]] form an orthonormal basis of
+$\mathcal{C}(G)$.
+
+_ irred2
+    That is, the characters belonging to an irreducible representation.

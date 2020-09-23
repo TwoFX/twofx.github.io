@@ -1,15 +1,15 @@
 import { Article } from "./data-source";
 
-import articleShallowLIAndLinearCodes from "./article-sh-linear-independence-linear-codes.txt";
+import articleCharacterTables from "./article-character-tables.txt";
 
 export function getSeed() {
   return {
     articles: [
       new Article({
-        id: "sh-linear-independence-linear-codes",
+        id: "character-tables",
         title:
-          "The connection between shallow linear independence and linear codes",
-        text: articleShallowLIAndLinearCodes,
+          "Techniques for constructing character tables",
+        text: articleCharacterTables,
       }),
     ],
 

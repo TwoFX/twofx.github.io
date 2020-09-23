@@ -24149,16 +24149,16 @@ class App {
 
 /***/ }),
 
-/***/ "./src/article-sh-linear-independence-linear-codes.txt":
-/*!*************************************************************!*\
-  !*** ./src/article-sh-linear-independence-linear-codes.txt ***!
-  \*************************************************************/
+/***/ "./src/article-character-tables.txt":
+/*!******************************************!*\
+  !*** ./src/article-character-tables.txt ***!
+  \******************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("In this article I describe a fascinating connection between [[shallowly linearly independent sets|toggle:sli]]\nand [[linear codes|toggle:linear codes]].\n\n_ sli\n    Two years ago, my friend Kolja stated an interesting problem. Let $V \\coloneqq \\mathbb{F}_2^n$ be the vector space of \n    binary words of length $n$. For $k\\in \\mathbb{N}$, how large a subset $M \\subseteq \\mathbb{F}_2^n$ can we find such\n    that every subset $A\\subseteq M$ of size $\\le k$ is linearly independent?\n    \n    I have investigated this problem in a [[writeup|https://github.com/datokrat/shallow-linear-independence/blob/master/lokal-linear-unabh%C3%A4ngig.pdf]] in German and propose to call such sets shallowly linearly independent or, more specific, linearly $k$-independent.\n\n_ linear codes\n    A linear code is a concept from computer science. It is a linear subspace $M \\subseteq \\mathbb{F}_2^n$ of so-called codewords (adding two words means xor-ing them). $M$ is isomorphic to the vector space $\\mathbb{F}_2^{\\dim M}$, and that's why a linear code $M$ can be used to represent binary words of length $\\dim M$. Although the encoded words might be longer, some codes have interesting error-correction properties, and that's the technology we all know from barcodes and CR codes.\n\nThe central observation is that while linear independence means that there are no non-trivial linear combinations of the zero vector, liner $k$-independence means that there are no non-trivial linear combinations with at most $k$ vectors involved. It is easier to see what is going on after formalizing this relationship a bit. Given $M \\subseteq \\mathbb{F}_2^n$, write all vectors of $M$ into the rows of a large matrix $A_M$ with dimensions $\\#M \\times n$. Feel free to explore an [[example|toggle:matrix example]].\n\n_ matrix example\n    Consider, for example, $$M = \\{ 1000, 0100, 0010, 0001, 1111 \\}.$$\n    Then $$A_M = \\begin{pmatrix} 1 & 0 & 0 & 0 \\\\ 0 & 1 & 0 & 0 \\\\ 0 & 0 & 1 & 0 \\\\ 0 & 0 & 0 & 1 \\\\ 1 & 1 & 1 & 1 \\end{pmatrix}.$$\n\nNow, linear combinations of zero are exactly those $v \\in \\mathbb{F}_2^{\\# M}$ with $v^\\top A_M = 0$, and the number of ones in $v$ (the Hamming weight) equals the number of vectors involved in the linear combination ([[example|toggle:linear combination example]]).\n\n_ linear combination example\n    In the example above, the smallest nontrivial linear combination of zero is $$ 1000 + 0100 + 0010 + 0001 + 1111 = 0.$$\n    This linear combination is represented by the vector $ 11111 $, and the fact that it is a linear combination of zero\n    can be expressed as $$ \\begin{pmatrix} 1 & 1 & 1 & 1 & 1 \\end{pmatrix} \\begin{pmatrix} 1 & 0 & 0 & 0 \\\\ 0 & 1 & 0 & 0 \\\\ 0 & 0 & 1 & 0 \\\\ 0 & 0 & 0 & 1 \\\\ 1 & 1 & 1 & 1 \\end{pmatrix} = \\begin{pmatrix} 0 & 0 & 0 & 0 \\end{pmatrix}.$$\n\nIn other words, the set of linear combinations of zero in M equals the kernel of $A^\\top$, and by the dimension formula, we obtain\n$$ \\dim \\left<M\\right> + \\dim \\ker A^\\top = \\# M. $$\n");
+/* harmony default export */ __webpack_exports__["default"] = ("Let $G$ be a finite group. A representation of $G$ is a homomorphism $\\rho\\colon G\\to\\operatorname{GL}(V)$,\nwhere $V$ is some finite-dimensional complex vector space. We want to somehow classify all\nrepresentations of $G$. By Maschke's theorem, every representation can be decomposed as\na [[direct sum|toggle:dsum]] of [[irreducible representations|toggle:irred]].\n\n_ dsum\n    Let $\\rho\\colon G \\to \\operatorname{GL}(V)$ and $\\rho'\\colon G\\to \\operatorname{GL}(V')$ be representation. The direct sum\n    $\\rho \\oplus \\rho'\\colon G \\to \\operatorname{GL}(V \\oplus W)$ is given by $g\\mapsto ((v, v')\\mapsto (\\rho(v), \\rho'(v')))$.\n\n_ irred\n    Let $\\rho\\colon G\\to\\operatorname{GL}(V)$ be a representation. We say that $\\rho$ is irreducible if there is no\n    subspace $W \\leq V$ such that $\\forall g\\in G\\colon \\rho(g)(W)\\leq W$.\n\nTherefore, if we understand the irreducible representations of $G$, [[in a way|toggle:inner]], we understand all\nrepresentations of $G$.\n\n_ inner\n    That is, if there is a way to actually find the irreducible components.\n    It turns out that this is possible---stay tuned!\n\n# Characters\n\nRepresentations can be a bit unwieldy, as $V$ can be an arbitrary finite-dimensional\ncomplex vector space. Miraculously, there is an invariant the completely\ncharacterizes representations: define the character $\\chi_{\\rho}\\colon G \\to \\mathbb{C}$ of a representation $\\rho$ via\n$g\\mapsto \\operatorname{tr}\\rho(g)$.\n\nThe definition may seem innocent enough, but it works rediculously well. Notice that\na character is a class function, i.e., it is constant on conjugacy classes of $G$. Indeed, we\nhave $$\\chi(hgh^{-1}) = \\operatorname{tr} \\rho(hgh^{-1}) = \\operatorname{tr} \\rho(h)\\rho(g)\\rho(h)^{-1} = \\operatorname{tr} \\rho(g) = \\chi(g).$$\nNow let $\\mathcal{C}(G)$ be the complex vector space of class functions of $G$. We have a Hermitian inner\nproduct on $\\mathcal{C}(G)$ given by $\\langle \\alpha, \\beta\\rangle \\coloneqq \\frac{1}{|G|}\\sum_{g \\in G}\\alpha(g)\\overline{\\beta(g)}$.\n\nNow, here's the miracle: the [[irreducible characters|toggle:irred2]] form an orthonormal basis of\n$\\mathcal{C}(G)$.\n\n_ irred2\n    That is, the characters belonging to an irreducible representation.\n");
 
 /***/ }),
 
@@ -24173,7 +24173,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getSeed", function() { return getSeed; });
 /* harmony import */ var _data_source__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data-source */ "./src/data-source.js");
-/* harmony import */ var _article_sh_linear_independence_linear_codes_txt__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./article-sh-linear-independence-linear-codes.txt */ "./src/article-sh-linear-independence-linear-codes.txt");
+/* harmony import */ var _article_character_tables_txt__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./article-character-tables.txt */ "./src/article-character-tables.txt");
 
 
 
@@ -24182,10 +24182,10 @@ function getSeed() {
   return {
     articles: [
       new _data_source__WEBPACK_IMPORTED_MODULE_0__["Article"]({
-        id: "sh-linear-independence-linear-codes",
+        id: "character-tables",
         title:
-          "The connection between shallow linear independence and linear codes",
-        text: _article_sh_linear_independence_linear_codes_txt__WEBPACK_IMPORTED_MODULE_1__["default"],
+          "Techniques for constructing character tables",
+        text: _article_character_tables_txt__WEBPACK_IMPORTED_MODULE_1__["default"],
       }),
     ],
 
