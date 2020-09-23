@@ -24467,6 +24467,9 @@ class ArticleDetail {
     }
 
     function createSvg(children) {
+      // Source of the SVG images: bootstrap-icons
+      // https://icons.getbootstrap.com/
+      // chevron-double-up and chevron-double-down
       return Object(snabbdom_build_package_h__WEBPACK_IMPORTED_MODULE_1__["h"])(
         "svg",
         {
