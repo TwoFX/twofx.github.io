@@ -19,6 +19,7 @@ To use this software, you will need Node.js and a Node.js package manager. I use
 Open a terminal and execute:
 ```sh
 git clone https://github.com/datokrat/crosscutt.git
+cd crosscutt
 yarn
 ```
 
@@ -101,7 +102,7 @@ _ example section
 
 After installing the package `http-server` using
 ```
-yarn global http-server
+yarn global add http-server
 ```
 you can execute
 ```
