@@ -63,7 +63,7 @@ where
       go (i + 1)
 ```
 
-it is written in a functional style, using tail recursion instead of a loop. Lean
+It is written in a functional style, using tail recursion instead of a loop. Lean
 also supports imperative constructs like `for` loops, but currently the support
 for proving properties of functional programs is still better than for proving
 properties of imperative programs.
@@ -133,4 +133,4 @@ algorithm. If any Verus user is reading this, I would be very interested to see 
 implementation!
 
 If you'd like to join the fun, feel free to have a look at the [`human-eval-lean`](https://github.com/TwoFX/human-eval-lean)
-repo and have a look at the open tasks!
+repo and check out the open tasks!
