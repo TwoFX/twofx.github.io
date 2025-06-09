@@ -41,7 +41,7 @@ steps before it starts checking numbers that even have a change of being a divis
 
 Here is a better approach: loop upwards from $$2$$, looking for the _smallest_ divisor
 $$d$$, and return $$n/d$$. If no divisor is found after looking for candidates until
-$$\sqrt{d}$$, return $$1$$.
+$$\sqrt{n}$$, return $$1$$.
 
 This works because whenever $$d$$ is a divisor of $$n$$, so is $$n/d$$, and this correspondence
 reverses the order of the divisors. It shows that the largest divisor of $$n$$ can be
