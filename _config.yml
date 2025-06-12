@@ -16,7 +16,8 @@
 title: Markus Himmel
 email:
 description: >- # this means to ignore newlines until "baseurl:"
-  My name is Markus and this is my blog.
+  My name is Markus Himmel and this is my blog where I will be talking mostly
+  about formal verification, in particular in the programming language Lean.
 github_username: TwoFx
 minimal_mistakes_skin: default
 search: true
@@ -86,8 +87,8 @@ defaults:
       type: posts
     values:
       layout: single
-      author_profile: true
       read_time: true
+      show_date: true
   # _pages
   - scope:
       path: "_pages"
