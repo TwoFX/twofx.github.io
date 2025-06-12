@@ -17,7 +17,7 @@ worked even harder to ensure that it's easy to prove things about iterators
 (even when iterating monadically).
 
 The celebrate this occasion, let's do one of the `human-eval-lean` tasks using
-the new iterators (see [my previous post]({% post_url 025-06-09-the-largest-divisor %})
+the new iterators (see [my previous post]({% post_url 2025-06-09-the-largest-divisor %})
 for context about `human-eval-lean`).
 
 HumanEval problem 11 asks us to take two lists of booleans and combine them into
