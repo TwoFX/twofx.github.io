@@ -16,7 +16,7 @@ sure that iterators are compiled into efficient code (like in Rust), and he has
 worked even harder to ensure that it's easy to prove things about iterators
 (even when iterating monadically).
 
-The celebrate this occasion, let's do one of the `human-eval-lean` tasks using
+To celebrate this occasion, let's do one of the `human-eval-lean` tasks using
 the new iterators (see [my previous post]({% post_url 2025-06-09-the-largest-divisor %})
 for context about `human-eval-lean`).
 
