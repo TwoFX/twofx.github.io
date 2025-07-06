@@ -1,6 +1,6 @@
 ---
 title: "My first verified (imperative) program"
-date: 2025-07-06T20:00:00+02:00
+date: 2025-07-06T13:00:00+02:00
 categories:
   - blog
 tags:
