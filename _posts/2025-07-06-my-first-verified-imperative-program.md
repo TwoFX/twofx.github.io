@@ -186,7 +186,7 @@ and Lean tells us `Goals accomplished!` to confirm that the proof is complete.
 Behind the scenes, Lean has performed a detailed analysis of all cases, referring
 to existing library results (for example that after inserting a new element into
 a hash set, an element is contained if and only if it is equal to the new element
-or was already contained in the original hash set).
+or was already contained in the original hash set) as appropriate.
 
 For reference, here is the full program with the full proof:
 
