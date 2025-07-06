@@ -273,7 +273,7 @@ kernel, which is the only part that is relevant to whether Lean accepts a proof.
 All of the automation that makes proving in Lean easy (including `grind`) generates
 so-called proof terms that are fed to the small kernel. This means that while a bug in an
 SMT solver might lead to Dafny accepting an incorrect program, a bug in `grind`
-will at worst lead to Lean rejecting a correct program. which is much less bad.
+will at worst lead to Lean rejecting a correct program, which is much less bad.
 
 Finally, the fact that Lean is focused on building theories means that large
 libraries of proofs like [mathlib](https://github.com/leanprover-community/mathlib4)
