@@ -1,6 +1,6 @@
 ---
 title: "Freyd-Mitchell and Gabriel-Popescu"
-date: 2025-06-12T07:00:00+02:00
+date: 2025-06-21T07:00:00+02:00
 categories:
   - blog
 tags:
