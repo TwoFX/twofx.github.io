@@ -322,6 +322,6 @@ that together sum to zero.
 In the proof, instead of `mvcgen` for locally imperative programs, we rely on
 `fun_induction` for the case analysis, and as before, `grind` does all of the proving work.
 
-[^1]: If you would like to dig deep into how imperative programming inside a functional language works behind the scenes, there is [a paper](https://lean-lang.org/papers/do.pdf) that describes the main ideas.
+[^1]: If you would like to dig deep into how imperative programming inside a functional language works behind the scenes, there is [a paper](https://dl.acm.org/doi/pdf/10.1145/3547640) that describes the main ideas.
 
 [^2]: I won't explain exactly what `grind` is or how it works here, but there is a comprehensive [reference manual entry](https://lean-lang.org/doc/reference/latest/The--grind--tactic/#grind) that should answer most of your questions.
