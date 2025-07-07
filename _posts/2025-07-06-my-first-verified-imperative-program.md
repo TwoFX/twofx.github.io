@@ -324,7 +324,7 @@ In the proof, instead of `mvcgen` for locally imperative programs, we rely on
 
 The correctness of `pairsSumToZero` is then an easy consequence:
 
-```
+```lean
 theorem pairsSumToZero_iff (l : List Int) :
     pairsSumToZero l = true ↔ l.ExistsPair (fun a b => a + b = 0) := by
   simp [pairsSumToZero, pairsSumToZero_go_iff]
