@@ -82,7 +82,7 @@ some initial experiments.
 
 The foundation of `Std.Do` is given by the classic idea of *Hoare triples*. This
 means that assertions about imperative programs are always of the form
-"if $$P$$ is true, and I run the command $$C$$, then $$Q$$" is true. For example,
+"if $$P$$ is true, and I run the command $$C$$, then $$Q$$ is true". For example,
 if a given variable is at least $$1$$, and I decrement it, then the variable
 will be at least $$0$$.
 
@@ -125,7 +125,7 @@ mvcgen [pairsSumToZero] --  generate verification conditions for the imperative 
 
 Lean then tells us that as a next step it wants us to provide a *loop invariant* for
 the `for` loop in our code. This is a property that is true at the beginning of the
-loop and is preserved by each loop iteration. This is how we can deduce that something
+loop and is preserved by each loop iteration. Loop invariants are how we can deduce that something
 is true after we exit the loop.
 
 In our case, the control flow is slightly more complicated than the trivial examples
@@ -321,6 +321,15 @@ pair that sums to zero, or there is one element in `seen` and one in the suffix
 that together sum to zero.
 In the proof, instead of `mvcgen` for locally imperative programs, we rely on
 `fun_induction` for the case analysis, and as before, `grind` does all of the proving work.
+
+The correctness of `pairsSumToZero` is then an easy consequence:
+
+```
+theorem pairsSumToZero_iff (l : List Int) :
+    pairsSumToZero l = true ↔ l.ExistsPair (fun a b => a + b = 0) := by
+  simp [pairsSumToZero, pairsSumToZero_go_iff]
+```
+
 
 [^1]: If you would like to dig deep into how imperative programming inside a functional language works behind the scenes, there is [a paper](https://dl.acm.org/doi/pdf/10.1145/3547640) that describes the main ideas.
 
