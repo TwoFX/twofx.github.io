@@ -285,7 +285,7 @@ taken as axioms, Lean's `Std.HashSet` and `Std.TreeSet` are
 [fully implemented and verified in Lean](https://github.com/leanprover/lean4/tree/master/src/Std/Data).
 
 For all of these reasons, I believe that Lean is in a very good position
-to be a system that users can rely on and trust for real-world program verification
+to be a system that developers can rely on and trust for real-world program verification
 tasks.
 
 ## Bonus: verified functional programming
