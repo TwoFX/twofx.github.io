@@ -8,6 +8,14 @@ tags:
   - human-eval-lean
 ---
 
+**Important note:** This post is out of date! It describes an old, early
+version of the `mvcgen` tactic. As of Lean 4.25.0, the syntax has changed a bit
+(for the better) and the system has become much more convenient to use. To
+learn more about `mvcgen` as it is released today, I recommend the
+[official introduction](https://lean-lang.org/doc/reference/latest/The--mvcgen--tactic/#mvcgen-tactic)
+that is part of the Lean reference manual. My reasoning why I find all of this
+very cool hasn't changed, of course, so if you're interested in that, read on.
+
 One of the many exciting new features in the upcoming Lean 4.22 release is a
 preview of the new verification infrastructure for proving properties of imperative
 programs. In this post, I'll take a first look at this feature, show a simple
