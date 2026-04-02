@@ -13,10 +13,10 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: Markus Himmel
+title: Julia Markus Himmel
 email:
 description: >- # this means to ignore newlines until "baseurl:"
-  My name is Markus Himmel and this is my blog where I will be talking mostly
+  My name is Julia Markus Himmel and this is my blog where I will be talking mostly
   about formal verification, in particular in the programming language Lean.
 github_username: TwoFx
 minimal_mistakes_skin: default
@@ -63,22 +63,22 @@ plugins:
   - jekyll-include-cache
 
 author:
-  name   : "Markus Himmel"
+  name   : "Julia Markus Himmel"
   avatar : "/assets/images/bio-photo.jpg"
   bio    : "Mathematics and computer science"
   links:
     - label: "Website"
       icon: "fas fa-fw fa-link"
-      url: "https://markushimmel.de"
+      url: "https://juliahimmel.de"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/TwoFx"
+      url: "https://github.com/TwoFX"
 
 footer:
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/TwoFx"
+      url: "https://github.com/TwoFX"
 
 defaults:
   # _posts
