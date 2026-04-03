@@ -8,7 +8,8 @@ Last update: 2026-04-03
 A quick update:
 
 * Like so many people before me, I have successfully failed the "work on a
-programming language without becoming transfem" challenge[^1].
+programming language without becoming transfem" challenge[^1]. This is great,
+I am super happy!
 * I am still working on [Lean](https://lean-lang.org/)'s standard library and get
 to work towards making production-ready formally verified software a reality.
 I am very grateful that I can work with a great team on such an exciting project.
