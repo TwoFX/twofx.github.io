@@ -3,9 +3,10 @@ permalink: /about/
 title: "About"
 ---
 
-I am a software developer with a background in mathematics. I am interested in
-many things, including formal verification, algorithm engineering and ILP solving
-on the computer side, and topology on the mathematics side.
+I am a non-binary (she/her) software developer with a background in
+mathematics. I am interested in many things, including formal verification,
+algorithm engineering and ILP solving on the computer side, and topology on the
+mathematics side.
 
 At work, I am a Research Software Engineer/Tech Lead at the [Lean FRO](https://lean-fro.org/).
 
