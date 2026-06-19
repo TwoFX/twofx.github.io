@@ -13,7 +13,7 @@ Here is a little informal Q&A-style post about the changes to `Float` in Lean
 order. This is not an "official" communication by the Lean FRO, whatever that
 may mean.
 
-# What is changing about floats in Lean 4.33?
+## What is changing about floats in Lean 4.33?
 
 Up until Lean 4.32, the `Float` type and all operations defined on it were
 opaque to Lean's kernel. This means that it was possible to write programs
@@ -50,7 +50,7 @@ instead of using your CPU's native floating-point support. This way, you can
 achieve a spectacular 200x speed-down on your code with the added bonus of far
 fewer supported operations and an overall suboptimal experience.
 
-# How can I use this?
+## How can I use this?
 
 The boring use case is that floating-point operations now execute in the
 kernel, so that you can prove `0.1 + 0.2 != 0.3` with `rfl`. However, you should
@@ -62,7 +62,7 @@ The other, much more interesting, use case is that it is now, in principle,
 possible to prove all kinds of properties about Lean programs involving the
 `Float` type. This brings us to the important bit.
 
-# The important bit
+## The important bit
 
 The `Float.Model` type and its associated theory are
 **not** a fully-featured general-purpose floating-point library, and they will
@@ -94,27 +94,27 @@ if we planned to add a floating-point verification layer to the Lean standard
 library, which we are not planning to do, we would make this entirely separate
 from the construction of `Float.Model`.
 
-# Are you going to ship lemmas about `Float` as part of the Lean distribution?
+## Are you going to ship lemmas about `Float` as part of the Lean distribution?
 
 No, see above.
 
-# Are you adding a general-purpose floating-point library to the Lean standard library?
+## Are you adding a general-purpose floating-point library to the Lean standard library?
 
 No, see above. Note also that it would be quite difficult for us to do this,
 because we don't have plans to add a real number type to the Lean distribution,
 which is a prerequisite for a proper float verification layer.
 
-# I am writing a pure proof development involving floating-point numbers and I have no plans to execute my code. Is the new material useful to me?
+## I am writing a pure proof development involving floating-point numbers and I have no plans to execute my code. Is the new material useful to me?
 
 No.
 
-# I have goals about `Float` or `Float32` that I want to bitblast and dispatch using `bv_decide`. Can I do this now?
+## I have goals about `Float` or `Float32` that I want to bitblast and dispatch using `bv_decide`. Can I do this now?
 
 Our model is not set up to allow this. However, you can connect `Float.Model`
 to a library like [fp-lean](https://github.com/opencompl/fp-lean), transfer your
 statement over to their bitblastable floats and then bitblast that.
 
-# How was the model constructed?
+## How was the model constructed?
 
 While it is not a direct port, part of the code of the model we use
 (specifically the `UnpackedFloat` type and the rounding logic) is quite
@@ -148,12 +148,12 @@ including:
   (though be aware that there are some typos in the calculations)
 - The *Handbook of Floating-Point Arithmetic*.
 
-# Where can I look at the model?
+## Where can I look at the model?
 
 [Here](https://github.com/leanprover/lean4/blob/bc5f89f4abe82ee105ce7922a83e286fd7a67774/src/Init/Data/Float/Model/Float.lean)
 is a link to the code.
 
-# Is the model correct?
+## Is the model correct?
 
 This question is more subtle than it may seem, because we first have to define
 what it means to be "correct". The central goal of `Float.Model` is to behave
@@ -212,18 +212,18 @@ the decimal-to-float routine.
 As time progresses, hopefully people will show our model equivalent to their
 models, which should further increase confidence.
 
-# Which operations are supported?
+## Which operations are supported?
 
 As of writing: `add`, `sub`, `mul`, `div`, `sqrt`, `abs`, `neg`, `isNaN`,
 `isInf`, `isFinite`, `le`, `lt`, `beq`, `ofInt`, `ofNat`, `ofIntX`, `ofUIntX`,
 `toIntX`, `toUIntX`, `ofScientific`.
 
-# Are you going to support more operations?
+## Are you going to support more operations?
 
 Yes, there are some more that we hope to get to in the short term (before the
 release of 4.33 perhaps), such as `ceil`, `floor`, `round` and `scaleB`.
 
-# Will you add my favorite operation?
+## Will you add my favorite operation?
 
 It depends. As so often it is a question of how expensive it would be to add,
 and how useful having it would be.
@@ -252,11 +252,11 @@ and/or open an RFC. As with all feature suggestions to Lean, the ones that are
 most likely to get acted on are those which unlock a relevant and real use case
 instead of just being something that would be cool to have.
 
-# Will you consider my pull request adding a model for a new operation?
+## Will you consider my pull request adding a model for a new operation?
 
 No.
 
-# Why not?
+## Why not?
 
 With all of the considerations described above and the fact that getting this
 wrong is a miscompilation, reviewing a PR adding a new model is more expensive
