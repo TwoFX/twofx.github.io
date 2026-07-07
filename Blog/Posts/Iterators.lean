@@ -1,12 +1,22 @@
----
-title: "Lean has iterators now"
-date: 2025-06-12T07:00:00+02:00
-categories:
-  - blog
-tags:
-  - Lean
-  - human-eval-lean
----
+import VersoBlog
+import Blog.Tags
+
+open Verso Genre Blog
+open Verso.Code.External
+open Blog.Tag
+
+set_option verso.exampleProject "examples/iterators"
+set_option verso.exampleModule "Iterators"
+
+set_option pp.rawOnError true
+
+#doc (Post) "Lean has iterators now" =>
+
+%%%
+authors := ["Julia Markus Himmel"]
+date := {year := 2025, month := 6, day := 12}
+categories := [lean, humanEvalLean]
+%%%
 
 Lean 4.22 (to be released in early August) will ship with the first version of
 the new iterators library, allowing for efficient streaming, combining and
@@ -17,7 +27,7 @@ worked even harder to ensure that it's easy to prove things about iterators
 (even when iterating monadically).
 
 To celebrate this occasion, let's do one of the `human-eval-lean` tasks using
-the new iterators (see [my previous post]({% post_url 2025-06-09-the-largest-divisor %})
+the new iterators (see {page_link Blog.Posts.LargestDivisor}[my previous post]
 for context about `human-eval-lean`).
 
 HumanEval problem 11 asks us to take two lists of booleans and combine them into
@@ -28,7 +38,7 @@ but that sounds like a lot of work. `Iter.zip` to the rescue!
 
 What follows is the entire code, including proofs.
 
-```lean
+```anchor full
 import Std.Data.Iterators
 
 def stringXor (a b : List Bool) : List Bool :=
@@ -48,4 +58,3 @@ theorem getElem_stringXor {a b : List Bool} {i : Nat} {hia : i < a.length} {hib 
 Three simple lines of stream processing, and the proofs are trivial one-liners
 using what's available in the standard library. Superfast code and easy proofs -
 this is how I want my Lean. I love it!
-

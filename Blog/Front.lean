@@ -1,7 +1,9 @@
----
-permalink: /about/
-title: "About"
----
+import VersoBlog
+open Verso Genre Blog
+
+set_option pp.rawOnError true
+
+#doc (Page) "Julia Markus Himmel" =>
 
 I am a non-binary (she/her) software developer with a background in
 mathematics. I am interested in many things, including formal verification,

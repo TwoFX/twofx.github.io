@@ -1,14 +1,25 @@
----
-title: "My first verified (imperative) program"
-date: 2025-07-06T13:00:00+02:00
-categories:
-  - blog
-tags:
-  - Lean
-  - human-eval-lean
----
+import VersoBlog
+import Blog.Tags
 
-**Important note:** This post is out of date! It describes an old, early
+open Verso Genre Blog
+open Verso.Code.External
+open Blog.Tag
+
+set_option verso.exampleProject "examples/mvcgen"
+set_option verso.exampleModule "Mvcgen"
+set_option verso.externalExamples.suppressedNamespaces "Functional"
+
+set_option pp.rawOnError true
+
+#doc (Post) "My first verified (imperative) program" =>
+
+%%%
+authors := ["Julia Markus Himmel"]
+date := {year := 2025, month := 7, day := 6}
+categories := [lean, humanEvalLean]
+%%%
+
+*Important note:* This post is out of date! It describes an old, early
 version of the `mvcgen` tactic. As of Lean 4.25.0, the syntax has changed a bit
 (for the better) and the system has become much more convenient to use. To
 learn more about `mvcgen` as it is released today, I recommend the
@@ -21,27 +32,27 @@ preview of the new verification infrastructure for proving properties of imperat
 programs. In this post, I'll take a first look at this feature, show a simple
 example of what it can do, and compare it to similar tools.
 
-## Guiding example
+# Guiding example
 
 We will use the following simple programming task as an example throughout the
 post: given a list of integers, determine if there are two integers at distinct
 positions in the list that sum to zero.
 
 For example, given the list `[1, 0, 2, -1]`, the result should be `true`, because
-$$1 + (-1) = 0$$, and given the list `[0, 0]`, the result should also be `true`,
+$`1 + (-1) = 0`, and given the list `[0, 0]`, the result should also be `true`,
 but given the list `[1, 0, -2]`, the result should be `false`.
 
 The simplest way to solve this is to use two nested loops to iterate over all
 pairs of distinct positions. This takes quadratic time, which is inefficient. There are
 several ways to improve upon this. Here is the one we will use: iterate over the
 list, and keep all elements we have seen so far in a set data structure. When
-encountering a number $$x$$, efficiently check if we have seen $$-x$$ before. If
+encountering a number $`x`, efficiently check if we have seen $`-x` before. If
 so, the answer is positive. If we reach the end of the list, the answer is negative.
-This takes expected time $$O(n)$$ when using a hash set, or worst-case time $$O(n \log n)$$
+This takes expected time $`O(n)` when using a hash set, or worst-case time $`O(n \log n)`
 when using a binary search tree. In Lean, both are available, under the names
 `Std.HashSet` and `Std.TreeSet`, respectively.
 
-## Local imperativity
+# Local imperativity
 
 Lean is a functional programming language, but it has good support for imperative
 (stateful) programming both locally within a single function (via `do` notation)
@@ -51,7 +62,7 @@ imperativity only.
 Using local imperativity, it is easy to write down the set-based algorithm described
 above:
 
-```lean
+```anchor impl
 def pairsSumToZero (l : List Int) : Id Bool := do
   let mut seen : HashSet Int := ∅
 
@@ -66,9 +77,11 @@ def pairsSumToZero (l : List Int) : Id Bool := do
 The `Id` and `do` in the first line of the code tell Lean that we would like to
 work in "locally imperative" mode. Then we have access to a Python-like syntax
 with the usual affordances of imperative programming, such as mutable state,
-`for` loops and early returns[^1].
+`for` loops and early returns.[^1]
 
-## Proving properties of locally imperative programs
+[^1]: If you would like to dig deep into how imperative programming inside a functional language works behind the scenes, there is [a paper](https://dl.acm.org/doi/pdf/10.1145/3547640) that describes the main ideas.
+
+# Proving properties of locally imperative programs
 
 Local imperativity is very useful when writing programs, and indeed much of Lean
 itself is implemented in Lean using this style. However, Lean is not just a
@@ -88,11 +101,11 @@ The main thing that is still missing is documentation (and this post will not
 change that in any meaningful way), but with a bit of digging we can already do
 some initial experiments.
 
-The foundation of `Std.Do` is given by the classic idea of *Hoare triples*. This
+The foundation of `Std.Do` is given by the classic idea of _Hoare triples_. This
 means that assertions about imperative programs are always of the form
-"if $$P$$ is true, and I run the command $$C$$, then $$Q$$ is true". For example,
-if a given variable is at least $$1$$, and I decrement it, then the variable
-will be at least $$0$$.
+"if $`P` is true, and I run the command $`C`, then $`Q` is true". For example,
+if a given variable is at least $`1`, and I decrement it, then the variable
+will be at least $`0`.
 
 The nice thing about Hoare triples is that they are composable. A large program
 will be composed of many small functions that might operate on global state or
@@ -102,8 +115,10 @@ Since our example only consists of a single function, this part isn't important
 for our example, but it hints at the generality of `Std.Do` which I might explore
 in a future post.
 
-As Lean is an interactive system, the walkthrough that follows is easiest to follow
-by having Lean open. Click [here](https://live.lean-lang.org/#url=https%3A%2F%2Fgist.githubusercontent.com%2FTwoFX%2Fbcdb6202fa8d8024b6a766a4d9df3f30%2Fraw%2Fe9263dddd43e868985614f689456a0adea50a3ee%2Fimperative.lean)
+As Lean is an interactive system, this walkthrough is best enjoyed interactively:
+you can hover over the code blocks in this post to see types, documentation and
+intermediate proof states. If you'd rather have the real thing, click
+[here](https://live.lean-lang.org/#url=https%3A%2F%2Fgist.githubusercontent.com%2FTwoFX%2Fbcdb6202fa8d8024b6a766a4d9df3f30%2Fraw%2Fe9263dddd43e868985614f689456a0adea50a3ee%2Fimperative.lean)
 to open the online Lean playground pre-filled
 with the proof. You can place your cursor inside the various places in the proof
 to see what Lean has to say at that point.
@@ -111,7 +126,7 @@ to see what Lean has to say at that point.
 The Lean syntax for Hoare triples is `⦃Precondition⦄ Command ⦃Postcondition⦄`. Using
 this, let's state the correctness property of our `pairsSumToZero` function:
 
-```lean
+```anchor spec
 theorem pairsSumToZero_spec (l : List Int) :
     ⦃⌜True⌝⦄ pairsSumToZero l ⦃⇓r => r = true ↔ l.ExistsPair (fun a b => a + b = 0)⦄
 ```
@@ -119,19 +134,20 @@ theorem pairsSumToZero_spec (l : List Int) :
 In our case, there are no preconditions, so we use the always-true proposition `True`
 as the precondition. The postcondition reads as "the function returns `true` if
 and only if there is a pair of distinct positions in `l` such that the corresponding
-values sum to $$0$$".
+values sum to $`0`".
 
 Now, Lean is an interactive theorem prover, so it expects us to tell it why this
 Hoare triple is in fact true. To do this, `Std.Do` provides a piece of proof automation
 called `mvcgen` (for "monadic verification condition generator") which analyzes locally
 imperative programs and tells us what we need to do to prove the triple. After
-starting the proof of `pairsSumToZero_spec`, we can invoke 
+starting the proof of `pairsSumToZero_spec`, we can invoke
 
-```lean
-mvcgen [pairsSumToZero] --  generate verification conditions for the imperative code.
+```anchor vcgen
+  mvcgen [pairsSumToZero]
 ```
 
-Lean then tells us that as a next step it wants us to provide a *loop invariant* for
+to generate verification conditions for the imperative code.
+Lean then tells us that as a next step it wants us to provide a _loop invariant_ for
 the `for` loop in our code. This is a property that is true at the beginning of the
 loop and is preserved by each loop iteration. Loop invariants are how we can deduce that something
 is true after we exit the loop.
@@ -140,21 +156,21 @@ In our case, the control flow is slightly more complicated than the trivial exam
 that you usually see for loop invariants, because our loop has an early return which we have to consider.
 Here is the correct loop invariant:
 
-> *Either* we have not taken the early return yet, and `seen` contains exactly those
+> _Either_ we have not taken the early return yet, and `seen` contains exactly those
 > elements which are present in the prefix of the list we have traversed so far,
 > and the prefix of the list we have traversed so far does not contain two elements
 > that sum to zero,
 >
-> *or* we have taken the early return, and the list contains two elements which sum to zero.
+> _or_ we have taken the early return, and the list contains two elements which sum to zero.
 
 Translating this to Lean in the form that `Std.Do` expects is a bit difficult without
 documentation, but here is how it looks when done correctly:
 
-```lean
-case inv =>
-  exact (fun (⟨earlyReturn?, seen⟩, traversalState) =>
-    (earlyReturn? = none ∧ (∀ x, x ∈ seen ↔ x ∈ traversalState.rpref) ∧ ¬traversalState.pref.ExistsPair (fun a b => a + b = 0)) ∨
-    (earlyReturn? = some true ∧ l.ExistsPair (fun a b => a + b = 0) ∧ l = traversalState.pref), ())
+```anchor inv
+  case inv =>
+    exact (fun (⟨earlyReturn?, seen⟩, traversalState) =>
+      (earlyReturn? = none ∧ (∀ x, x ∈ seen ↔ x ∈ traversalState.rpref) ∧ ¬traversalState.pref.ExistsPair (fun a b => a + b = 0)) ∨
+      (earlyReturn? = some true ∧ l.ExistsPair (fun a b => a + b = 0) ∧ l = traversalState.pref), ())
 ```
 
 Here `earlyReturn?` is an optional value containing the value we returned early
@@ -183,11 +199,14 @@ Now, to an experienced Lean user, proving these five things is not difficult, bu
 it is a bit tedious, because all of these are pretty obvious. Luckily, this is
 where another big new feature from Lean 4.22 enters the picture: the `grind` tactic.
 This is a new bit of proof automation which is able to make short work of many
-"obvious" proofs like ours[^2]. This means that to dispatch the five proof obligations
-above, it suffices to say
+"obvious" proofs like ours.[^2]
 
-```lean
-all_goals simp_all <;> grind
+This means that to dispatch the five proof obligations above, it suffices to say
+
+[^2]: I won't explain exactly what `grind` is or how it works here, but there is a comprehensive [reference manual entry](https://lean-lang.org/doc/reference/latest/The--grind--tactic/#grind) that should answer most of your questions.
+
+```anchor allGoals
+  all_goals simp_all <;> grind
 ```
 
 and Lean tells us `Goals accomplished!` to confirm that the proof is complete.
@@ -198,7 +217,7 @@ or was already contained in the original hash set) as appropriate.
 
 For reference, here is the full program with the full proof:
 
-```lean
+```anchor full
 /-!
 # Imperative implementation
 -/
@@ -218,7 +237,8 @@ def pairsSumToZero (l : List Int) : Id Bool := do
 -/
 
 theorem pairsSumToZero_spec (l : List Int) :
-    ⦃⌜True⌝⦄ pairsSumToZero l ⦃⇓r => r = true ↔ l.ExistsPair (fun a b => a + b = 0)⦄ := by
+    ⦃⌜True⌝⦄ pairsSumToZero l ⦃⇓r => r = true ↔ l.ExistsPair (fun a b => a + b = 0)⦄
+    := by
   mvcgen [pairsSumToZero]
 
   case inv =>
@@ -229,7 +249,7 @@ theorem pairsSumToZero_spec (l : List Int) :
   all_goals simp_all <;> grind
 ```
 
-## Why this excites me
+# Why this excites me
 
 I will explain why I was very happy when I saw this working for the first time.
 
@@ -240,7 +260,7 @@ between Dafny-style systems and Lean.
 Dafny and Verus are primarily automated systems. They allow you to state properties
 at various places in your programs. To make sure that these properties hold, the
 system then encodes the properties into so-called verification conditions which they then
-send to an external *automated* prover called an SMT solver. The SMT solver is very
+send to an external _automated_ prover called an SMT solver. The SMT solver is very
 good at proving these properties fully autonomously. This means that if everything
 works out, you never have to worry about proofs, which is great! There are, however,
 some significant downsides which all center around what happens when you leave that
@@ -259,7 +279,7 @@ a medium-sized project when you run into a limitation that you just cannot overc
 with no way to recover, and no good way to introspect the solver to see what can
 be done to make progress.
 
-To make matters worse, the behaviour of SMT solvers can change subtly between versions, making it possible 
+To make matters worse, the behaviour of SMT solvers can change subtly between versions, making it possible
 that proofs break for no real reason during version upgrades. In addition, SMT solvers
 are large and complex software projects, and you're trusting that they're free of bugs
 for your proofs to be correct.
@@ -274,7 +294,7 @@ easy to write.
 
 In our case, `grind` takes a role that is similar to the SMT solver in automated
 systems. The difference is that when `grind` fails at some point, you can just do
-the proof manually, and Lean is *really good* at making this easy.
+the proof manually, and Lean is _really good_ at making this easy.
 
 From a trust perspective, Lean also has a good story: Lean is built to have a small
 kernel, which is the only part that is relevant to whether Lean accepts a proof.
@@ -296,12 +316,12 @@ For all of these reasons, I believe that Lean is in a very good position
 to be a system that developers can rely on and trust for real-world program verification
 tasks.
 
-## Bonus: verified functional programming
+# Bonus: verified functional programming
 
 As a quick addendum, I will note that the functional implementation of `pairsSumToZero`
 is also very easy to verify using `grind`. Here is the implementation:
 
-```lean
+```anchor funImpl
 def pairsSumToZero (l : List Int) : Bool :=
   go l ∅
 where
@@ -316,7 +336,7 @@ takes the state as a parameter. Consequently, instead of writing down a loop
 invariant, we give a correctness proof for the `go` function, which basically boils
 down to the same thing:
 
-```lean
+```anchor funGoSpec
 theorem pairsSumToZero_go_iff (l : List Int) (seen : HashSet Int) :
     pairsSumToZero.go l seen = true ↔
       l.ExistsPair (fun a b => a + b = 0) ∨ ∃ a ∈ seen, ∃ b ∈ l, a + b = 0 := by
@@ -332,13 +352,8 @@ In the proof, instead of `mvcgen` for locally imperative programs, we rely on
 
 The correctness of `pairsSumToZero` is then an easy consequence:
 
-```lean
+```anchor funFinal
 theorem pairsSumToZero_iff (l : List Int) :
     pairsSumToZero l = true ↔ l.ExistsPair (fun a b => a + b = 0) := by
   simp [pairsSumToZero, pairsSumToZero_go_iff]
 ```
-
-
-[^1]: If you would like to dig deep into how imperative programming inside a functional language works behind the scenes, there is [a paper](https://dl.acm.org/doi/pdf/10.1145/3547640) that describes the main ideas.
-
-[^2]: I won't explain exactly what `grind` is or how it works here, but there is a comprehensive [reference manual entry](https://lean-lang.org/doc/reference/latest/The--grind--tactic/#grind) that should answer most of your questions.

@@ -1,0 +1,523 @@
+/* Style for juliahimmel.de — simple, readable, light & dark. */
+
+:root {
+  --bg: #ffffff;
+  --bg-soft: #f6f7f8;
+  --fg: #3d4144;
+  --fg-strong: #16181a;
+  --fg-muted: #6f777d;
+  --accent: #2f7bbd;
+  --border: #e3e6e8;
+  --code-bg: #f6f7f8;
+  --code-border: #e3e6e8;
+
+  --verso-text-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+  --verso-structure-font-family: var(--verso-text-font-family);
+  --verso-code-font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+    Consolas, "Liberation Mono", monospace;
+
+  --verso-text-color: var(--fg);
+  --verso-structure-color: var(--fg-strong);
+  --verso-code-color: var(--fg-strong);
+
+  --verso-code-keyword-color: #708;
+  --verso-code-const-color: #164;
+  --verso-code-var-color: #05a;
+
+  /* Hover UI: tippy popups, pinned tactic states, token highlights */
+  --hover-bg: #ffffff;
+  --hover-border: #c9ced4;
+  --hover-code-bg: #f0f2f4;
+  --hover-code-border: #dfe3e7;
+  --token-hl-bg: #dfe5ea;
+
+  /* Verso uses this as the background of hovered warning tokens */
+  --verso-warning-color: #f6e2b3;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #252a34;
+    --bg-soft: #2d3340;
+    --fg: #d4d8dc;
+    --fg-strong: #f3f5f7;
+    --fg-muted: #9aa4ad;
+    --accent: #7cb8e8;
+    --border: #3d4452;
+    --code-bg: #2d3340;
+    --code-border: #3d4452;
+
+    --verso-code-keyword-color: #d197e8;
+    --verso-code-const-color: #7fd0a2;
+    --verso-code-var-color: #82b4e8;
+
+    --verso-info-color: var(--fg);
+    --verso-warning-color: #6a5420;
+    --verso-error-color: #ff7b72;
+
+    --hover-bg: #343c4a;
+    --hover-border: #4d5666;
+    --hover-code-bg: #262b36;
+    --hover-code-border: #454e5c;
+    --token-hl-bg: #40495a;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--verso-text-font-family);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--fg);
+  background: var(--bg);
+}
+
+/* ---------- Header ---------- */
+
+.site-header {
+  border-bottom: 1px solid var(--border);
+}
+
+.site-header-inner {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 0.9rem 1.25rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.site-title {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--fg-strong);
+  text-decoration: none;
+}
+
+.site-title:hover {
+  color: var(--accent);
+}
+
+.site-nav {
+  display: flex;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+}
+
+.site-nav a {
+  color: var(--fg);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.site-nav a:hover {
+  color: var(--accent);
+}
+
+/* ---------- Layout ---------- */
+
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 1.75rem 1.25rem 3rem;
+}
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  color: var(--fg-muted);
+  font-size: 0.85rem;
+}
+
+.site-footer > p {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 0.35rem 1.25rem;
+}
+
+.site-footer p:first-child {
+  padding-top: 0.9rem;
+}
+
+.site-footer p:last-child {
+  padding-bottom: 0.9rem;
+}
+
+.site-footer a {
+  color: var(--fg-muted);
+}
+
+/* ---------- Typography ---------- */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--verso-structure-font-family);
+  color: var(--fg-strong);
+  line-height: 1.25;
+  margin: 1.8em 0 0.5em;
+}
+
+h1 { font-size: 1.7rem; margin-top: 0.2em; }
+h2 { font-size: 1.35rem; }
+h3 { font-size: 1.15rem; }
+
+p, ul, ol, pre, blockquote {
+  margin: 0 0 1em;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+blockquote {
+  margin-left: 0;
+  padding-left: 1em;
+  border-left: 3px solid var(--border);
+  color: var(--fg-muted);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---------- Code ---------- */
+
+code {
+  font-family: var(--verso-code-font-family);
+  font-size: 0.875em;
+}
+
+p code, li code, blockquote code {
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: 4px;
+  padding: 0.1em 0.3em;
+}
+
+/* Math is emitted as <code class="math"> and rendered in place by KaTeX;
+   it should read as part of the prose, not as code */
+code.math {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+pre {
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: 6px;
+  padding: 0.9em 1.1em;
+  overflow-x: auto;
+  line-height: 1.5;
+}
+
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* Verso's highlighted Lean code */
+.hl.lean.block {
+  display: block;
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: 6px;
+  padding: 0.9em 1.1em;
+  overflow-x: auto;
+  line-height: 1.5;
+  margin: 0 0 1em;
+}
+
+.hl.lean {
+  font-family: var(--verso-code-font-family);
+  font-size: 0.875em;
+}
+
+code .hl.lean, p .hl.lean.inline {
+  font-size: inherit;
+}
+
+/* ---------- Post lists ---------- */
+
+ul.post-list {
+  list-style: none;
+  margin: 0 0 1.5em;
+  padding: 0;
+}
+
+li.post-entry {
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+li.post-entry:last-child {
+  border-bottom: none;
+}
+
+.post-entry-title {
+  margin: 0 0 0.15rem;
+  font-size: 1.15rem;
+}
+
+.post-entry-title a {
+  color: var(--fg-strong);
+}
+
+.post-entry-title a:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.post-entry-meta, .post-meta {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--fg-muted);
+}
+
+.post-meta {
+  margin-bottom: 1.5rem;
+}
+
+.post-entry-meta a.tag, .post-meta a.tag {
+  color: var(--fg-muted);
+  text-decoration: underline;
+  text-decoration-color: var(--border);
+}
+
+.post-entry-meta a.tag:hover, .post-meta a.tag:hover {
+  color: var(--accent);
+}
+
+.post-tags::before {
+  content: "· ";
+}
+
+article.post > header > h1, article.page > h1 {
+  margin-bottom: 0.25rem;
+}
+
+/* ---------- Home ---------- */
+
+.author-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.author-photo {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.author-name {
+  margin: 0 0 0.2rem;
+  font-size: 1.35rem;
+}
+
+.author-bio {
+  margin: 0 0 0.4rem;
+  color: var(--fg-muted);
+}
+
+.author-links {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.author-links a {
+  margin-right: 0.9rem;
+}
+
+.home-intro {
+  margin-bottom: 1rem;
+}
+
+.recent-posts h2, .year-group h2, .tag-group h2 {
+  font-size: 1.25rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.3rem;
+}
+
+/* ---------- Categories / tags line on archive pages ---------- */
+
+.category-list {
+  font-size: 0.95rem;
+  color: var(--fg-muted);
+}
+
+.category-list a {
+  margin-right: 0.7rem;
+}
+
+/* ---------- Footnotes ---------- */
+
+details.footnote {
+  font-size: 0.875rem;
+  color: var(--fg-muted);
+  margin: -0.5em 0 1em;
+}
+
+details.footnote summary {
+  cursor: pointer;
+  color: var(--accent);
+}
+
+/* ---------- Math ---------- */
+
+.math.display {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+  overflow-x: auto;
+}
+
+/* ---------- Verso hover popups (tippy) ----------
+
+Verso's inline CSS hardcodes a light palette (#e5e5e5 boxes, black text,
+#eee token highlights). This stylesheet loads after it, so rules here with
+the same selectors win; everything routes through the --hover-* variables
+so both color schemes are covered. */
+
+/* Highlight for other occurrences of the hovered identifier, hovered
+   literals/typed tokens, and hovered tactic regions */
+@media (hover: hover) {
+  .hl.lean .token.binding-hl, .hl.lean .literal:hover, .hl.lean .token.typed:hover {
+    background-color: var(--token-hl-bg);
+  }
+
+  .hl.lean .tactic:has(> .tactic-toggle:not(:checked)) > label:hover:not(:has(.tactic > label:hover)) {
+    background-color: var(--token-hl-bg);
+  }
+}
+
+/* Hovered tokens carrying diagnostics (hardcoded light in Verso's CSS;
+   the warning variant uses --verso-warning-color, set above) */
+@media (prefers-color-scheme: dark) and (hover: hover) {
+  .hl.lean .has-info.error:hover {
+    background-color: #6e2f36;
+  }
+
+  .hl.lean .has-info.information:hover {
+    background-color: #31487c;
+  }
+}
+
+/* The popup boxes themselves. The warning/error/info themes keep Verso's
+   colored border as the severity indicator, so only recolor their surface. */
+.tippy-box[data-theme~='lean'], .tippy-box[data-theme~='tactic'] {
+  background-color: var(--hover-bg);
+  color: var(--fg);
+  border: 1px solid var(--hover-border);
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.2);
+}
+
+.tippy-box[data-theme~='warning'], .tippy-box[data-theme~='error'], .tippy-box[data-theme~='info'] {
+  background-color: var(--hover-bg);
+  color: var(--fg);
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.2);
+}
+
+.tippy-box[data-theme~='lean'][data-placement^='top'] > .tippy-arrow::before,
+.tippy-box[data-theme~='tactic'][data-placement^='top'] > .tippy-arrow::before,
+.tippy-box[data-theme~='message'][data-placement^='top'] > .tippy-arrow::before {
+  border-top-color: var(--hover-bg);
+}
+
+.tippy-box[data-theme~='lean'][data-placement^='bottom'] > .tippy-arrow::before,
+.tippy-box[data-theme~='tactic'][data-placement^='bottom'] > .tippy-arrow::before,
+.tippy-box[data-theme~='message'][data-placement^='bottom'] > .tippy-arrow::before {
+  border-bottom-color: var(--hover-bg);
+}
+
+.tippy-box[data-theme~='lean'][data-placement^='left'] > .tippy-arrow::before,
+.tippy-box[data-theme~='tactic'][data-placement^='left'] > .tippy-arrow::before,
+.tippy-box[data-theme~='message'][data-placement^='left'] > .tippy-arrow::before {
+  border-left-color: var(--hover-bg);
+}
+
+.tippy-box[data-theme~='lean'][data-placement^='right'] > .tippy-arrow::before,
+.tippy-box[data-theme~='tactic'][data-placement^='right'] > .tippy-arrow::before,
+.tippy-box[data-theme~='message'][data-placement^='right'] > .tippy-arrow::before {
+  border-right-color: var(--hover-bg);
+}
+
+/* Popup contents: the box provides the background, the content stays
+   transparent (an opaque content background leaves the box color showing
+   as a ring around the edge) */
+.tippy-box .hl.lean {
+  color: var(--fg);
+}
+
+.hl.lean .hover-info code {
+  color: inherit;
+}
+
+.hl.lean .hover-info .sep {
+  border-top-color: var(--hover-border);
+}
+
+/* Inline code and code blocks in docstrings shown in popups: give them the
+   usual chip treatment so they stand out from the popup background */
+.hl.lean .hover-info div.docstring code {
+  background: var(--hover-code-bg);
+  border: 1px solid var(--hover-code-border);
+  border-radius: 4px;
+  padding: 0.05em 0.25em;
+}
+
+.hl.lean .hover-info div.docstring pre {
+  background: var(--hover-code-bg);
+  border: 1px solid var(--hover-code-border);
+}
+
+.hl.lean .hover-info div.docstring pre code {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* Tactic proof states: pinned ones get the popup surface; inside a popup the
+   box already provides it */
+.hl.lean .tactic-state {
+  background-color: var(--hover-bg);
+  border-color: var(--hover-border);
+  color: var(--fg);
+}
+
+.hl.lean.popup .tactic-state {
+  background-color: transparent;
+}
+
+/* Case-split disclosure triangles in proof states (hardcoded black) */
+.hl.lean .case-label:has(input[type="checkbox"])::before {
+  background-color: currentColor;
+}
