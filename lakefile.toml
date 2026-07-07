@@ -12,3 +12,7 @@ name = "Blog"
 [[lean_exe]]
 name = "blog"
 root = "Main"
+
+[[lean_exe]]
+name = "new-post"
+root = "NewPost"

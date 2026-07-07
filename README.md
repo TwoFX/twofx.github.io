@@ -47,10 +47,13 @@ automatically (via the `subverso-extract-mod` executable and the
 
 Two things to know when touching the example projects:
 
-* The SubVerso revision is pinned in each `lakefile.toml` to a commit that
-  still compiles with the old toolchains (newer SubVerso requires the Lean
-  module system, ≥ 4.29). Verso's own test suite parses JSON produced by this
-  revision, so it stays compatible with the site's Verso.
+* Each example project requires exactly the SubVerso version corresponding
+  to the site's Verso tag — SubVerso publishes a `verso-vX.Y.Z` tag for every
+  Verso tag `vX.Y.Z`, and its data format is an implementation detail with no
+  compatibility guarantees between versions, so both sides must match.
+  Projects whose Lean predates the module system (< 4.25) can't build that
+  version directly, so they pin its automatically demodulized twin, tagged
+  `no-modules/<commit>` after the commit that `verso-vX.Y.Z` points to.
 * Always use `lake update --keep-toolchain` in the example projects —
   a plain `lake update` overwrites `lean-toolchain` with SubVerso's, which
   would defeat the whole point of per-post toolchains.
@@ -83,12 +86,35 @@ page's content moved to the front page; `/about/` is a redirect to `/`.
 
 ## Writing a new post
 
+Run `lake exe new-post` (from the repository root). It asks for the title,
+date, authors, tags (creating new ones in `Blog/Tags.lean` if needed), the
+URL slug and whether the post contains Lean code, and then does steps 1–3
+below — including the example project and its `lake-manifest.json`, and a
+`postSlugs` entry if a custom slug was chosen. The manual steps it automates:
+
 1. Create `Blog/Posts/MyPost.lean` with `#doc (Post) "Title" =>`, a `%%%`
    metadata block (date, authors, categories) and the content in Verso markup.
 2. If it contains Lean code, create `examples/my-post/` with the right
    `lean-toolchain`, the SubVerso require, and anchored code.
 3. Import the module in `Blog.lean` and add it to the `site` definition in
    `Main.lean` (posts in the `"blog" ... with` block).
+4. `lake exe blog --output _site` and check the result.
+
+## Updating Lean/Verso
+
+1. Set the new tag under the `verso` require in the root `lakefile.toml`
+   (`rev = "vX.Y.Z"`) and run a plain `lake update` — here (and only here)
+   the toolchain rewrite is what we want: it updates `lean-toolchain` to the
+   Lean version Verso is built against.
+2. Repin `subverso` in every `examples/*/lakefile.toml` to the corresponding
+   SubVerso tag: `rev = "verso-vX.Y.Z"` for projects on a module-system Lean
+   (≥ 4.25). Projects on an older Lean need the demodulized twin instead:
+   `rev = "no-modules/<commit>"`, where `<commit>` is the commit that
+   `verso-vX.Y.Z` points to — look it up with
+   `git ls-remote https://github.com/leanprover/subverso refs/tags/verso-vX.Y.Z`.
+3. In each example project, run
+   `elan run --install $(cat lean-toolchain) lake update --keep-toolchain`
+   to regenerate its manifest.
 4. `lake exe blog --output _site` and check the result.
 
 ## Deployment

@@ -4,7 +4,10 @@ defaultTargets = ["Iterators"]
 [[require]]
 name = "subverso"
 git = "https://github.com/leanprover/subverso"
-rev = "b899742d040e9eb946daec33c4d129a73537ae6c"
+# The demodulized twin of SubVerso `verso-v4.31.0`, the SubVerso version
+# corresponding to the site's Verso tag; this project's Lean predates the
+# module system (see "Updating Verso" in the README).
+rev = "no-modules/0bd508e8362f56d4a05cbf63614d4c97db954041"
 
 [[lean_lib]]
 name = "Iterators"
