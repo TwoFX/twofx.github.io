@@ -140,14 +140,36 @@ partial def askExampleDir (default : String) : IO String := do
 
 /-! # Tags -/
 
-/-- Extract the identifiers of the `Category` definitions in `Blog/Tags.lean`. -/
-def parseTagIdents (tagsSrc : String) : List String :=
-  tagsSrc.splitOn "\n" |>.filterMap fun line =>
+/--
+Extract the `Category` definitions in `Blog/Tags.lean` as
+`(identifier, display name)` pairs, e.g. `("lean", "Lean")`.
+-/
+def parseTags (tagsSrc : String) : List (String × String) := Id.run do
+  let mut tags := []
+  let mut ident? : Option String := none
+  for line in tagsSrc.splitOn "\n" do
     if line.startsWith "def " then
       match (line.drop 4).toString.splitOn " : Category" with
-      | ident :: _ :: _ => some (strip ident)
-      | _ => none
-    else none
+      | ident :: _ :: _ => ident? := some (strip ident)
+      | _ => ident? := none
+    else if let some ident := ident? then
+      let line := strip line
+      if line.startsWith "name := " then
+        match line.splitOn "\"" with
+        | _ :: name :: _ => tags := tags ++ [(ident, name)]
+        | _ => pure ()
+        ident? := none
+  pure tags
+
+/--
+Find the tag a user-entered string refers to. Users see display names on the
+rendered site but `categories` entries are identifiers, so accept either,
+case-insensitively, and resolve to the identifier.
+-/
+def findTag (knownTags : List (String × String)) (t : String) : Option String :=
+  knownTags.find? (fun (ident, name) =>
+      ident.toLower == t.toLower || name.toLower == t.toLower)
+    |>.map (·.1)
 
 def appendTagDef (src ident name slug : String) : String :=
   let src := if src.endsWith "\n" then src else src ++ "\n"
@@ -264,16 +286,19 @@ def main : IO UInt32 := do
 
   -- Tags: offer the existing ones, create missing ones in Blog/Tags.lean
   let tagsSrc ← IO.FS.readFile ⟨"Blog/Tags.lean"⟩
-  let mut knownTags := parseTagIdents tagsSrc
-  IO.println s!"Existing tags: {", ".intercalate knownTags}"
+  let mut knownTags := parseTags tagsSrc
+  IO.println s!"Existing tags: {", ".intercalate (knownTags.map fun (ident, name) =>
+    if ident == name then ident else s!"{ident} ({name})")}"
   let tagsRaw ← ask "Tags (comma-separated, Enter for none)"
   let requestedTags := tagsRaw.splitOn "," |>.map strip |>.filter (!·.isEmpty)
   let mut tags : List String := []
   let mut newTagsSrc := tagsSrc
   let mut tagsModified := false
   for t in requestedTags do
-    if knownTags.contains t then
-      tags := tags ++ [t]
+    if let some ident := findTag knownTags t then
+      if ident != t then
+        IO.println s!"Using the existing tag {ident} for \"{t}\"."
+      tags := tags ++ [ident]
     else if !isValidIdent t then
       IO.println s!"Skipping tag \"{t}\": not a valid Lean identifier."
     else if ← askYesNo s!"Tag \"{t}\" does not exist yet. Add it to Blog/Tags.lean?" true then
@@ -281,7 +306,7 @@ def main : IO UInt32 := do
       let slug ← ask s!"Slug for \"{t}\" (used as the /tags/#<slug> anchor)" (slugify name)
       newTagsSrc := appendTagDef newTagsSrc t name slug
       tagsModified := true
-      knownTags := knownTags ++ [t]
+      knownTags := knownTags ++ [(t, name)]
       tags := tags ++ [t]
     else
       IO.println s!"Skipping tag \"{t}\"."
