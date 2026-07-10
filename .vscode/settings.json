@@ -1,0 +1,9 @@
+{
+	"files.insertFinalNewline": true,
+	"files.trimTrailingWhitespace": true,
+	"[lean4]": {
+		"editor.rulers": [
+			100
+		]
+	}
+}

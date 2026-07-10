@@ -1,0 +1,12 @@
+name = "examples"
+defaultTargets = ["AnUnderappreciatedLeanFeature"]
+
+[[require]]
+name = "subverso"
+git = "https://github.com/leanprover/subverso"
+# The SubVerso version corresponding to the site's Verso tag (see "Updating
+# Verso" in the README).
+rev = "verso-v4.31.0"
+
+[[lean_lib]]
+name = "AnUnderappreciatedLeanFeature"
