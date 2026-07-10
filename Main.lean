@@ -46,6 +46,7 @@ def theSite : Site := site Blog.Front /
   "tags" Blog.TagsPage
   "now" Blog.Now
   "blog" Blog.BlogIndex with
+    Blog.Posts.AnUnderappreciatedLeanFeature
     Blog.Posts.FloatQanda
     Blog.Posts.Mvcgen
     Blog.Posts.FreydMitchell

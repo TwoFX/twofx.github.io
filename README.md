@@ -32,6 +32,7 @@ Each post with code has a project under `examples/` with its own
 | `examples/largest-divisor` | v4.20.1 | The largest divisor |
 | `examples/iterators` | v4.22.0 | Lean has iterators now |
 | `examples/mvcgen` | v4.22.0 | My first verified (imperative) program |
+| `examples/an-underappreciated-lean-feature` | v4.31.0 | An underappreciated Lean feature |
 
 The code in these projects is the *real, compiling* code from the posts.
 Regions are marked with `-- ANCHOR: name` / `-- ANCHOR_END: name` comments and

@@ -181,7 +181,7 @@ def primary : Template := do
             "© Julia Markus Himmel. Built with "
             <a href="https://lean-lang.org/">"Lean"</a>
             " and "
-            <a href="https://github.com/leanprover/verso">"Verso"</a>
+            <a href="https://verso.lean-lang.org/">"Verso"</a>
             "."
           </p>
         </footer>
