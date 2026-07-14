@@ -208,7 +208,7 @@ Another interesting opportunity arising from DNRO is that it lets a library prov
 functions as an opt-in. For example, a library could choose to provide a “simple” API for
 a type, which is available by default, and an “advanced” API, which only becomes available after
 `open`ing something like `Library.Advanced`. Or, in the case of Lean itself, something like `open Lean`
-might make additional functions on basic types (which we are not part of the standard library but
+might make additional functions on basic types (which are not part of the standard library canon but
 nonetheless useful for metaprogramming) available via dot notation. It is a very flexible feature.
 
 Really, the main difference from the low-tech solution described in the previous section is the organization
